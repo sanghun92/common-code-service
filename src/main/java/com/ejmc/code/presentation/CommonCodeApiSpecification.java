@@ -2,6 +2,7 @@ package com.ejmc.code.presentation;
 
 import com.ejmc.code.application.dto.CommonCodeRegistrationRequest;
 import com.ejmc.code.application.dto.CommonCodeResponse;
+import com.ejmc.common.application.dto.CommonApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,6 @@ public interface CommonCodeApiSpecification {
             path = "/api/common-code-group/{groupId}/codes",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    CommonCodeResponse showCommonCode(@PathVariable Long groupId,
-                                      @RequestParam String code);
+    CommonApiResponse<CommonCodeResponse> showCommonCode(@PathVariable Long groupId,
+                                                         @RequestParam String code);
 }

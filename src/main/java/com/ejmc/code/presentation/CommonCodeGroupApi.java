@@ -3,6 +3,7 @@ package com.ejmc.code.presentation;
 import com.ejmc.code.application.CommonCodeGroupService;
 import com.ejmc.code.application.dto.CommonCodeGroupRegistrationRequest;
 import com.ejmc.code.application.dto.CommonCodeGroupResponse;
+import com.ejmc.common.application.dto.CommonApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,8 +22,10 @@ public class CommonCodeGroupApi implements CommonCodeGroupApiSpecification {
     }
 
     @Override
-    public CommonCodeGroupResponse showCommonCodeGroup(Long groupId) {
+    public CommonApiResponse<CommonCodeGroupResponse> showCommonCodeGroup(Long groupId) {
         log.info("공통 코드 그룹 조회 요청 - groupId : {}", groupId);
-        return commonCodeGroupService.retrieveCodeGroupBy(groupId);
+
+        CommonCodeGroupResponse response = commonCodeGroupService.retrieveCodeGroupBy(groupId);
+        return CommonApiResponse.success(response);
     }
 }
