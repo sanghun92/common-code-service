@@ -10,10 +10,6 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: update
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
 
 # Swagger springdoc-ui Configuration
 springdoc:
@@ -49,4 +45,8 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
-        use_sql_comment: false
+        use_sql_comment: fal경se
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
