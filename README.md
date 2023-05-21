@@ -90,8 +90,6 @@ POST /api/code-group
 | description | String | O        | 공통 코드 그룹 설명  |
 
 ```json
-http://localhost:8080/api/code-group
-
 {
   "name": "BN",
   "description": "사업구분 코드"
@@ -110,10 +108,6 @@ GET /api/code-group/{name}
 | Parameters | Type   | Required | descriptions |
 |------------|--------|----------|--------------|
 | name       | String | O        | 공통 코드 그룹명    |
-
-```
-http://localhost:8080/api/code-group/ZP
-```
 
 #### Response
 - body
@@ -195,9 +189,7 @@ POST /api/code-group/{groupName}/codes
 | label       | String | O        | 공통 코드 라벨     |
 | description | String | O        | 공통 코드 설명     |
 
-```json
-http://localhost:8080/api/code-group/ZP/codes
-        
+```json 
 {
   "name": "ZP8",
   "label": "착공신고",
@@ -226,9 +218,7 @@ GET /api/codes/{name}
 | name       | String | 공통 코드명       |
 | label      | String | 공통 코드 라벨     |
 
-```json
-http://localhost:8080/api/codes/ZP1
-        
+```json 
 {
   "success": true,
   "timestamp": "2023-05-22T01:29:45.736989",
