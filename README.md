@@ -37,7 +37,7 @@ java -jar ./build/libs/common-code-service-0.0.1.jar --spring.profiles.active=lo
 - 공통 코드
   - [X] 공통 코드는 한글명과 코드값을 가진다.
   - [X] 각 공통 코드는 그룹에 포함된다.
-  - [X] (그룹 코드값, 공통 코드 코드값)은 고유값이다.
+  - [X] 공통 코드 코드값은 고유값이다.
   - [X] 공통 코드별 조회 API를 제공한다.
   - [X] (Option) 공통 코드 생성 API를 제공한다.
 
