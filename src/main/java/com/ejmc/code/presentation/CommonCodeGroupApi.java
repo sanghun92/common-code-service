@@ -22,10 +22,10 @@ public class CommonCodeGroupApi implements CommonCodeGroupApiSpecification {
     }
 
     @Override
-    public CommonApiResponse<CommonCodeGroupResponse> showCommonCodeGroup(Long groupId) {
-        log.info("공통 코드 그룹 조회 요청 - groupId : {}", groupId);
+    public CommonApiResponse<CommonCodeGroupResponse> showCommonCodeGroup(String name) {
+        log.info("공통 코드 그룹 조회 요청 - prefix : {}", name);
 
-        CommonCodeGroupResponse response = commonCodeGroupService.retrieveCodeGroupBy(groupId);
+        CommonCodeGroupResponse response = commonCodeGroupService.retrieveCodeGroupBy(name);
         return CommonApiResponse.success(response);
     }
 }

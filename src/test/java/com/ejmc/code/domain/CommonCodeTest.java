@@ -12,7 +12,7 @@ class CommonCodeTest {
     private CommonCodeGroup codeGroup;
     @BeforeEach
     void setUp() {
-        this.codeGroup = new CommonCodeGroup("ZONE_PROGRESS_TYPE", "ZP", "진행단계 구분 코드");
+        this.codeGroup = new CommonCodeGroup("ZP", "진행단계 구분 코드");
     }
 
     @ParameterizedTest

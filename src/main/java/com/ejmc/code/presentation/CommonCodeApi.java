@@ -6,6 +6,7 @@ import com.ejmc.code.application.dto.CommonCodeResponse;
 import com.ejmc.common.application.dto.CommonApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,16 +17,15 @@ public class CommonCodeApi implements CommonCodeApiSpecification {
     private final CommonCodeService commonCodeService;
 
     @Override
-    public void registerCommonCode(Long groupId, CommonCodeRegistrationRequest request) {
-        log.info("공통 코드 등록 요청 - groupId : {}, {}", groupId, request);
-        commonCodeService.registerCode(groupId, request);
+    public void registerCommonCode(String groupName, CommonCodeRegistrationRequest request) {
+        log.info("공통 코드 등록 요청 - groupName : {}, {}", groupName, request);
+        commonCodeService.registerCode(groupName, request);
     }
 
-    @Override
-    public CommonApiResponse<CommonCodeResponse> showCommonCode(Long groupId, String code) {
-        log.info("공통 코드 조회 요청 - groupId : {}, code : {}", groupId, code);
+    public CommonApiResponse<CommonCodeResponse> showCommonCodes(@RequestParam String name) {
+        log.info("공통 코드 조회 요청 - code : {}", name);
 
-        CommonCodeResponse response = commonCodeService.retrieveCodeBy(groupId, code);
+        CommonCodeResponse response = commonCodeService.retrieveCodeBy(name);
         return CommonApiResponse.success(response);
     }
 }

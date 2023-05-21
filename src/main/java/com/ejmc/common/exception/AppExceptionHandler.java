@@ -1,7 +1,7 @@
 package com.ejmc.common.exception;
 
-import com.ejmc.common.application.dto.ErrorBody;
 import com.ejmc.common.application.dto.CommonApiResponse;
+import com.ejmc.common.application.dto.ErrorBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -67,6 +67,14 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler  {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<CommonApiResponse<Void>> handleIllegalArgumentException(IllegalArgumentException ex) {
         String message = "유효하지 않은 인수가 넘겨졌습니다.";
+        logger.error(message, ex);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(CommonApiResponse.error(message));
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<CommonApiResponse<Void>> handleValidationException(ValidationException ex) {
+        String message = ex.getMessage();
         logger.error(message, ex);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(CommonApiResponse.error(message));

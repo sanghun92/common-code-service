@@ -2,8 +2,10 @@ package com.ejmc.code.application;
 
 import com.ejmc.code.application.dto.CommonCodeRegistrationRequest;
 import com.ejmc.code.application.dto.CommonCodeResponse;
+import com.ejmc.code.domain.CommonCode;
 import com.ejmc.code.domain.CommonCodeDetails;
 import com.ejmc.code.domain.CommonCodeGroup;
+import com.ejmc.code.domain.repository.CommonCodeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,35 +14,40 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 class CommonCodeServiceTest {
 
-    private Long groupId;
     private CommonCodeGroup codeGroup;
     private CommonCodeDetails commonCodeDetails;
 
     @Mock
+    private CommonCodeValidator commonCodeValidator;
+
+    @Mock
     private CommonCodeGroupService commonCodeGroupService;
+
+    @Mock
+    private CommonCodeRepository commonCodeRepository;
 
     @InjectMocks
     private CommonCodeService commonCodeService;
 
     @BeforeEach
     void setUp() {
-        this.groupId = 1L;
-        this.codeGroup = new CommonCodeGroup("ZONE_PROGRESS_TYPE", "ZP", "진행단계 구분 코드");
-        this.commonCodeDetails = new CommonCodeDetails("1", "기본계획수립", "진행단계 기본계획수립 코드");
+        this.codeGroup = new CommonCodeGroup("ZP", "진행단계 구분 코드");
+        this.commonCodeDetails = new CommonCodeDetails("ZP1", "기본계획수립", "진행단계 기본계획수립 코드");
 
         this.codeGroup.addCommonCode(commonCodeDetails);
-        this.codeGroup.addCommonCode(new CommonCodeDetails("2", "안전진단", "진행단계 안전진단 코드"));
-        this.codeGroup.addCommonCode(new CommonCodeDetails("3", "정비구역지정", "진행단계 정비구역지정 코드"));
-        this.codeGroup.addCommonCode(new CommonCodeDetails("4", "조합설립 추진위원회 승인", "진행단계 조합설립 추진위원회 승인 코드"));
+        this.codeGroup.addCommonCode(new CommonCodeDetails("ZP2", "안전진단", "진행단계 안전진단 코드"));
+        this.codeGroup.addCommonCode(new CommonCodeDetails("ZP3", "정비구역지정", "진행단계 정비구역지정 코드"));
+        this.codeGroup.addCommonCode(new CommonCodeDetails("ZP4", "조합설립 추진위원회 승인", "진행단계 조합설립 추진위원회 승인 코드"));
     }
 
     @Test
@@ -48,13 +55,15 @@ class CommonCodeServiceTest {
     void registerCodeTest() {
         // given
         CommonCodeRegistrationRequest request = new CommonCodeRegistrationRequest("5", "조합설립인가", "진행단계 기본계획수립 코드");
-        given(commonCodeGroupService.findCodeGroupBy(groupId)).willReturn(codeGroup);
+        willDoNothing().given(commonCodeValidator).validateNewCode(request);
+        given(commonCodeGroupService.findCodeGroupBy(codeGroup.getName())).willReturn(codeGroup);
 
         // when
-        commonCodeService.registerCode(groupId, request);
+        commonCodeService.registerCode(codeGroup.getName(), request);
 
         // then
-        then(commonCodeGroupService).should(times(1)).findCodeGroupBy(groupId);
+        then(commonCodeValidator).should(times(1)).validateNewCode(request);
+        then(commonCodeGroupService).should(times(1)).findCodeGroupBy(codeGroup.getName());
     }
 
     @Test
@@ -62,17 +71,17 @@ class CommonCodeServiceTest {
     void retrieveCodeByTest() {
         // given
         String codeName = commonCodeDetails.getName();
-        given(commonCodeGroupService.findCodeGroupBy(groupId)).willReturn(codeGroup);
+        CommonCode commonCode = new CommonCode(codeGroup, commonCodeDetails, 1);
+        given(commonCodeRepository.findByDetailsName(codeName)).willReturn(Optional.of(commonCode));
 
         // when
-        CommonCodeResponse response = commonCodeService.retrieveCodeBy(groupId, codeName);
+        CommonCodeResponse response = commonCodeService.retrieveCodeBy(codeName);
 
         // then
         assertAll(
                 () -> assertThat(response.getName()).isEqualTo(commonCodeDetails.getName()),
-                () -> assertThat(response.getLabel()).isEqualTo(commonCodeDetails.getLabel()),
-                () -> assertThat(response.getDescription()).isEqualTo(commonCodeDetails.getDescription())
+                () -> assertThat(response.getLabel()).isEqualTo(commonCodeDetails.getLabel())
         );
-        then(commonCodeGroupService).should(times(1)).findCodeGroupBy(groupId);
+        then(commonCodeRepository).should(times(1)).findByDetailsName(codeName);
     }
 }

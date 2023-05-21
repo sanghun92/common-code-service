@@ -11,9 +11,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(of = "details", callSuper = false)
 @ToString(exclude = "group")
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(
-        name = "uk_code_group_id_name", columnNames = {"group_id", "name"})
-)
+@Table(uniqueConstraints = @UniqueConstraint(name = "uk_code_name", columnNames = "name"))
 @Where(clause = "is_deleted = false")
 public class CommonCode extends BaseTimeEntity {
 
@@ -26,6 +24,7 @@ public class CommonCode extends BaseTimeEntity {
     private CommonCodeGroup group;
 
     @Embedded
+    @Getter(AccessLevel.PRIVATE)
     private CommonCodeDetails details;
 
     @Column(nullable = false)
@@ -47,6 +46,18 @@ public class CommonCode extends BaseTimeEntity {
         this.group = group;
         this.details = details;
         this.sort = sort;
+    }
+
+    public String getName() {
+        return this.details.getName();
+    }
+
+    public String getLabel() {
+        return this.details.getLabel();
+    }
+
+    public String getDescription() {
+        return this.details.getDescription();
     }
 
     public boolean match(String otherName) {

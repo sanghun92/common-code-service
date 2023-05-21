@@ -2,6 +2,7 @@ package com.ejmc.code.application;
 
 import com.ejmc.code.application.dto.CommonCodeGroupRegistrationRequest;
 import com.ejmc.code.domain.repository.CommonCodeGroupRepository;
+import com.ejmc.common.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ public class CommonCodeGroupValidator {
 
     public void validateNewCodeGroup(CommonCodeGroupRegistrationRequest request) {
         if(commonCodeGroupRepository.existsByDetailsName(request.getName())) {
-            throw new IllegalArgumentException(String.format("공통 코드 그룹명은 중복될 수 없습니다. - groupName : %s", request.getName()));
+            throw new ValidationException("공통 코드 그룹명은 중복될 수 없습니다. - groupName : %s", request.getName());
         }
     }
 }

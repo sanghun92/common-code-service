@@ -1,7 +1,7 @@
 package com.ejmc.code.application.dto;
 
 import com.ejmc.code.domain.CommonCodeGroup;
-import com.ejmc.code.domain.CommonCodeGroupDetails;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -11,20 +11,15 @@ import java.util.List;
 @Getter
 public class CommonCodeGroupResponse {
 
-    private final Long id;
-
+    @Schema(description = "공통 코드 그룹명")
     private final String name;
 
-    private final String description;
-
+    @Schema(description = "공통 코드 목록")
     private final List<CommonCodeResponse> codes;
 
     public static CommonCodeGroupResponse of(CommonCodeGroup commonCodeGroup) {
-        CommonCodeGroupDetails codeGroupDetails = commonCodeGroup.getDetails();
         return new CommonCodeGroupResponse(
-                commonCodeGroup.getId(),
-                codeGroupDetails.getName(),
-                codeGroupDetails.getDescription(),
+                commonCodeGroup.getName(),
                 CommonCodeResponse.of(commonCodeGroup.getCodes())
         );
     }

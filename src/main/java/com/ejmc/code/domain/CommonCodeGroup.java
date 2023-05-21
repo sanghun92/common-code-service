@@ -1,6 +1,7 @@
 package com.ejmc.code.domain;
 
 import com.ejmc.common.domain.BaseTimeEntity;
+import com.ejmc.common.exception.ValidationException;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,9 +13,7 @@ import java.util.Set;
 @EqualsAndHashCode(of = "details", callSuper = false)
 @ToString(exclude = "codes")
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(
-        name = "uk_code_group_name", columnNames = "name")
-)
+@Table(uniqueConstraints = @UniqueConstraint(name = "uk_code_group_name", columnNames = "name"))
 public class CommonCodeGroup extends BaseTimeEntity {
 
     @Id
@@ -22,20 +21,19 @@ public class CommonCodeGroup extends BaseTimeEntity {
     private Long id;
 
     @Embedded
+    @Getter(AccessLevel.PRIVATE)
     private CommonCodeGroupDetails details;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("sort")
     private Set<CommonCode> codes = new LinkedHashSet<>();
 
-    public CommonCodeGroup(String name, String prefix, String description) {
-        this.details = new CommonCodeGroupDetails(name, prefix, description);
+    public CommonCodeGroup(String name, String description) {
+        this.details = new CommonCodeGroupDetails(name, description);
     }
 
-    public CommonCode getCommonCodeBy(String codeName) {
-        return this.codes.stream().filter(code -> code.match(codeName))
-                .findAny()
-                .orElseThrow(() -> new EntityNotFoundException(String.format("공통 코드를 찾을 수 없습니다. - groupId : %d, code : %s", this.id, codeName)));
+    public String getName() {
+        return this.details.getName();
     }
 
     public boolean hasCommonCode(String codeName) {
@@ -44,7 +42,7 @@ public class CommonCodeGroup extends BaseTimeEntity {
 
     public void addCommonCode(CommonCodeDetails codeDetails) {
         if(hasCommonCode(codeDetails.getName())) {
-            throw new IllegalArgumentException(String.format("공통 코드명은 중복될 수 없습니다. - group : %s, codeName : %s", this.details.getName(), codeDetails.getName()));
+            throw new ValidationException("해당 그룹에 이미 등록 된 공통코드 입니다. - group : %s, codeName : %s", this.details.getName(), codeDetails.getName());
         }
 
         CommonCode commonCode = new CommonCode(this, codeDetails, getNextCodeSort());

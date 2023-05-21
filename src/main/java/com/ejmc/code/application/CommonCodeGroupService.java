@@ -24,13 +24,13 @@ public class CommonCodeGroupService {
         commonCodeGroupRepository.save(request.toCodeGroup());
     }
 
-    public CommonCodeGroupResponse retrieveCodeGroupBy(Long groupId) {
-        CommonCodeGroup codeGroup = findCodeGroupBy(groupId);
+    public CommonCodeGroupResponse retrieveCodeGroupBy(String name) {
+        CommonCodeGroup codeGroup = findCodeGroupBy(name);
         return CommonCodeGroupResponse.of(codeGroup);
     }
 
-    public CommonCodeGroup findCodeGroupBy(Long groupId) {
-        return commonCodeGroupRepository.findByIdWithCodes(groupId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("공통 그룹 코드를 찾을 수 없습니다. - groupId : %d", groupId)));
+    public CommonCodeGroup findCodeGroupBy(String name) {
+        return commonCodeGroupRepository.findByNameWithCodes(name)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("공통 그룹 코드를 찾을 수 없습니다. - name : %s", name)));
     }
 }

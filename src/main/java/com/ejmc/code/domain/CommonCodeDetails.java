@@ -1,5 +1,6 @@
 package com.ejmc.code.domain;
 
+import com.ejmc.common.exception.ValidationException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -39,15 +40,15 @@ public class CommonCodeDetails {
 
     private void validateCommonCodeDetails(String name, String label, String description) {
         if(!StringUtils.hasText(name)) {
-            throw new IllegalArgumentException("공통 코드명은 필수값입니다.");
+            throw new ValidationException("공통 코드명은 필수값입니다.");
         }
 
         if(!StringUtils.hasText(label)) {
-            throw new IllegalArgumentException("공통 코드 라벨값은 필수값입니다.");
+            throw new ValidationException("공통 코드 라벨값은 필수값입니다.");
         }
 
         if(!StringUtils.hasText(description)) {
-            throw new IllegalArgumentException("공통 코드 설명은 필수값입니다.");
+            throw new ValidationException("공통 코드 설명은 필수값입니다.");
         }
     }
 

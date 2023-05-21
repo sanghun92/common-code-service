@@ -39,7 +39,7 @@ public class DataLoaderApplicationListener implements ApplicationListener<Contex
 
     private Map<CommonCodeGroupSample, CommonCodeGroup> loadCommonCodeGroupSample() {
         Function<CommonCodeGroupSample, CommonCodeGroup> createCodeGroup = it -> commonCodeGroupRepository.save(
-                new CommonCodeGroup(it.name, it.prefix, it.description));
+                new CommonCodeGroup(it.name, it.description));
 
         return Arrays.stream(CommonCodeGroupSample.values())
                 .collect(Collectors.toMap(Function.identity(), createCodeGroup));
@@ -56,32 +56,25 @@ public class DataLoaderApplicationListener implements ApplicationListener<Contex
     }
 
     private enum CommonCodeGroupSample {
-        사업구분("BUSINESS_TYPE", "BN", "사업구분 코드"),
-        진행단계("ZONE_PROGRESS_TYPE", "ZP", "진행단계 구분 코드");
+        진행단계("ZP", "진행단계 구분 코드");
 
         private final String name;
-        private final String prefix;
         private final String description;
 
-        CommonCodeGroupSample(String name, String prefix, String description) {
+        CommonCodeGroupSample(String name, String description) {
             this.name = name;
-            this.prefix = prefix;
             this.description = description;
         }
     }
 
     private enum CommonCodeSample {
-        사업구분_재개발(CommonCodeGroupSample.사업구분, "1", "재개발", "사업구분 재개발 코드"),
-        사업구분_가로주택(CommonCodeGroupSample.사업구분, "2", "가로주택", "사업구분 가로주택 코드"),
-        사업구분_재건축(CommonCodeGroupSample.사업구분, "3", "재건축", "사업구분 재건축 코드"),
-        사업구분_소규모_재건축(CommonCodeGroupSample.사업구분, "4", "소규모 재건축", "사업구분 소규모 재건축 코드"),
-        진행단계_기본계획수립(CommonCodeGroupSample.진행단계, "1", "기본계획수립", "진행단계 기본계획수립 코드"),
-        진행단계_안전진단(CommonCodeGroupSample.진행단계, "2", "안전진단", "진행단계 안전진단 코드"),
-        진행단계_정비구역지정(CommonCodeGroupSample.진행단계, "3", "정비구역지정", "진행단계 정비구역지정 코드"),
-        진행단계_조합설립_추진위원회_승인(CommonCodeGroupSample.진행단계, "4", "조합설립 추진위원회 승인", "진행단계 조합설립 추진위원회 승인 코드"),
-        진행단계_조합설립인가(CommonCodeGroupSample.진행단계, "5", "조합설립인가", "진행단계 조합설립인가 코드"),
-        진행단계_사업시행인가(CommonCodeGroupSample.진행단계, "6", "사업시행인가", "진행단계 사업시행인가 코드"),
-        진행단계_관리처분인가(CommonCodeGroupSample.진행단계, "7", "관리처분인가", "진행단계 관리처분인가 코드");
+        진행단계_기본계획수립(CommonCodeGroupSample.진행단계, "ZP1", "기본계획수립", "진행단계 기본계획수립 코드"),
+        진행단계_안전진단(CommonCodeGroupSample.진행단계, "ZP2", "안전진단", "진행단계 안전진단 코드"),
+        진행단계_정비구역지정(CommonCodeGroupSample.진행단계, "ZP3", "정비구역지정", "진행단계 정비구역지정 코드"),
+        진행단계_조합설립_추진위원회_승인(CommonCodeGroupSample.진행단계, "ZP4", "조합설립 추진위원회 승인", "진행단계 조합설립 추진위원회 승인 코드"),
+        진행단계_조합설립인가(CommonCodeGroupSample.진행단계, "ZP5", "조합설립인가", "진행단계 조합설립인가 코드"),
+        진행단계_사업시행인가(CommonCodeGroupSample.진행단계, "ZP6", "사업시행인가", "진행단계 사업시행인가 코드"),
+        진행단계_관리처분인가(CommonCodeGroupSample.진행단계, "ZP7", "관리처분인가", "진행단계 관리처분인가 코드");
 
         private final CommonCodeGroupSample group;
         private final String name;
