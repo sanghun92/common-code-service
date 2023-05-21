@@ -15,10 +15,10 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class CommonCodeDetails {
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 10)
     private final String name;
 
-    @Column(nullable = false, length = 200)
+    @Column(nullable = false, length = 50)
     private final String label;
 
     @Column(nullable = false, length = 200)

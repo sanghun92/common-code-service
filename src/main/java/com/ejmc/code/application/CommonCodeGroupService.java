@@ -25,11 +25,11 @@ public class CommonCodeGroupService {
     }
 
     public CommonCodeGroupResponse retrieveCodeGroupBy(String name) {
-        CommonCodeGroup codeGroup = findCodeGroupBy(name);
+        CommonCodeGroup codeGroup = findCodeGroupEntityBy(name);
         return CommonCodeGroupResponse.of(codeGroup);
     }
 
-    public CommonCodeGroup findCodeGroupBy(String name) {
+    public CommonCodeGroup findCodeGroupEntityBy(String name) {
         return commonCodeGroupRepository.findByNameWithCodes(name)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("공통 그룹 코드를 찾을 수 없습니다. - name : %s", name)));
     }

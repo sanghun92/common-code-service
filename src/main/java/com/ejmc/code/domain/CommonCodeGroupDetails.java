@@ -15,7 +15,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class CommonCodeGroupDetails {
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 10)
     private final String name;
 
     @Column(nullable = false, length = 200)

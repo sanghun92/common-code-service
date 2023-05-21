@@ -23,7 +23,7 @@ public class CommonCodeService {
     @Transactional
     public void registerCode(String groupName, CommonCodeRegistrationRequest request) {
         commonCodeValidator.validateNewCode(request);
-        CommonCodeGroup codeGroup = commonCodeGroupService.findCodeGroupBy(groupName);
+        CommonCodeGroup codeGroup = commonCodeGroupService.findCodeGroupEntityBy(groupName);
         codeGroup.addCommonCode(request.toCodeDetails());
     }
 

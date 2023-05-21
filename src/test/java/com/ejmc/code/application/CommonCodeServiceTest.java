@@ -56,14 +56,14 @@ class CommonCodeServiceTest {
         // given
         CommonCodeRegistrationRequest request = new CommonCodeRegistrationRequest("5", "조합설립인가", "진행단계 기본계획수립 코드");
         willDoNothing().given(commonCodeValidator).validateNewCode(request);
-        given(commonCodeGroupService.findCodeGroupBy(codeGroup.getName())).willReturn(codeGroup);
+        given(commonCodeGroupService.findCodeGroupEntityBy(codeGroup.getName())).willReturn(codeGroup);
 
         // when
         commonCodeService.registerCode(codeGroup.getName(), request);
 
         // then
         then(commonCodeValidator).should(times(1)).validateNewCode(request);
-        then(commonCodeGroupService).should(times(1)).findCodeGroupBy(codeGroup.getName());
+        then(commonCodeGroupService).should(times(1)).findCodeGroupEntityBy(codeGroup.getName());
     }
 
     @Test
