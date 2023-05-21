@@ -45,7 +45,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
-        use_sql_comment: fal경se
+        use_sql_comment: false
   h2:
     console:
       enabled: true

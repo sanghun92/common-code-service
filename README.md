@@ -16,18 +16,19 @@
 ---
 
 ## 실행 방법
-```shell
-./gradlew clean build
-```
-
 - With Docker (MySQL 8)
 ```shell
 docker-compose -f ./docker/docker-compose.yml -p test up -d
+
+./gradlew clean build
+
 java -jar ./build/libs/common-code-service-0.0.1.jar
 ```
 
 - H2 (MySQL Mode)
 ```shell
+./gradlew clean build -Dspring.profiles.active=local
+
 java -jar ./build/libs/common-code-service-0.0.1.jar --spring.profiles.active=local 
 ```
 
