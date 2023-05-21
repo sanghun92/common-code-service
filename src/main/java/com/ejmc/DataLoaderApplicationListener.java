@@ -25,7 +25,12 @@ public class DataLoaderApplicationListener implements ApplicationListener<Contex
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        cleanSamples();
         loadSamples();
+    }
+
+    private void cleanSamples() {
+        commonCodeGroupRepository.deleteAll();
     }
 
     private void loadSamples() {

@@ -12,6 +12,7 @@
 - Spring boot 2.7.12
 - Gradle 7.6.1
 - MySQL 8
+  - DDL은 JPA의 ddl-auto 활용
 
 ---
 
