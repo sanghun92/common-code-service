@@ -19,16 +19,19 @@
 - With Docker (MySQL 8)
 ```shell
 docker-compose -f ./docker/docker-compose.yml -p test up -d
-
+```
+```shell
 ./gradlew clean build
-
+```
+```shell
 java -jar ./build/libs/common-code-service-0.0.1.jar
 ```
 
 - H2 (MySQL Mode)
 ```shell
 ./gradlew clean build -Dspring.profiles.active=local
-
+```
+```shell
 java -jar ./build/libs/common-code-service-0.0.1.jar --spring.profiles.active=local 
 ```
 
