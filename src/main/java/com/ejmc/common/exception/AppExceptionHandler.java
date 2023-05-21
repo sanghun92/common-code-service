@@ -58,7 +58,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler  {
                                                                           HttpHeaders headers,
                                                                           HttpStatus status,
                                                                           WebRequest request) {
-        String message = String.format("'%s' 쿼리 파라미터는 필수값입니다.", ex.getParameterName());
+        String message = String.format("'%s' 파라미터는 필수값입니다.", ex.getParameterName());
         logger.error(message, ex);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(CommonApiResponse.error(message));

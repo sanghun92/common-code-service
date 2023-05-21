@@ -22,7 +22,7 @@ public class CommonCodeApi implements CommonCodeApiSpecification {
         commonCodeService.registerCode(groupName, request);
     }
 
-    public CommonApiResponse<CommonCodeResponse> showCommonCodes(@RequestParam String name) {
+    public CommonApiResponse<CommonCodeResponse> showCommonCode(String name) {
         log.info("공통 코드 조회 요청 - code : {}", name);
 
         CommonCodeResponse response = commonCodeService.retrieveCodeBy(name);

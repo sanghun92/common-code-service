@@ -37,5 +37,5 @@ public interface CommonCodeApiSpecification {
             path = "/api/codes/{name}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    CommonApiResponse<CommonCodeResponse> showCommonCodes(@PathVariable String name);
+    CommonApiResponse<CommonCodeResponse> showCommonCode(@PathVariable String name);
 }
