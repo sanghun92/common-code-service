@@ -1,22 +1,15 @@
 # Spring Configuration
 spring:
+  datasource:
+    url: jdbc:mysql://localhost:13306/testdb?useUnicode=true&serverTimezone=Asia/Seoul
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     open-in-view: false
     hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-        use_sql_comment: false
-
-  datasource:
-    url: jdbc:h2:mem:testdb;MODE=MySQL;
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-
+      ddl-auto: update
   h2:
     console:
       enabled: true
@@ -37,3 +30,23 @@ springdoc:
       enabled: true
   cache:
     disabled: true
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MySQL;
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comment: false
